@@ -29,13 +29,28 @@ body
 {
    height: 100dvh;
    width: 100dvw;
+   padding: 2rem 1rem; /*This gives space inside the box*/
+   display: grid;
+   grid-template-columns: 0.2fr 1fr;
+   gap: 1.25rem;
+}
+
+#notesFileContainer
+{
+   background-color: #51592c;
+   height: 100%;
+   width: 100%;
+   border-radius: 1rem;
+
 }
 
 #noteEditorContainer
 {
    background-color: #51592c;
-   height: 80dvh;
+   height: 100%;
    width: 100%;
+   border-radius: 1rem;
+   padding: 1.5rem; /*This gives space inside the box*/
 }
 
 #noteEditor
