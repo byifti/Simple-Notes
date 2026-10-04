@@ -1,0 +1,37 @@
+:root
+{
+   --backgroundColor: #181C07;
+   --fontColor: #E9E2B5;
+   --accentColor: #CFB300;
+   --buttonColor: rgb(152, 123, 43);
+   --buttonShadow: rgb(93, 55, 2);
+   --fontAccent: rgb(217, 83, 15);
+   --alert: rgb(137, 63, 25);
+
+}
+
+body
+{
+   font-family: Lato;
+   font-weight: 300;
+   background-color: var(--backgroundColor);
+   color: var(--fontColor);
+}
+
+#noteEditor
+{
+   field-sizing: content;
+   color: var(--fontColor);
+   resize: none;
+   min-height: 80lvh;
+   max-height: 80lvh;
+   width: 100%;
+   font-size: 20px;
+   background-color: transparent;
+   border: none;
+}
+
+#noteEditor:focus
+{
+   outline: none;
+}
