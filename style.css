@@ -41,7 +41,31 @@ body
    height: 100%;
    width: 100%;
    border-radius: 1rem;
+   display: grid;
+   grid-template-rows: 0.1fr 1fr;
+   gap: 1rem;
 
+}
+
+
+#noteManagementButtons
+{
+   background-color: blue;
+}
+
+#filesLayout
+{
+   background-color: orange;
+   padding: 1.5rem 0rem; /*Gives head space and bottom space to the files*/
+}
+
+.noteFile
+{
+   margin-top: 0.5rem;
+   background-color: #84914f;
+   height: 2rem;
+   width: 100%;
+   border-radius: 0.5rem;
 }
 
 #noteEditorContainer
