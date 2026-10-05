@@ -1,17 +1,11 @@
 let noteHeader = document.getElementById("noteHeader")
 let noteBody = document.getElementById("noteBody")
+let addNote = document.getElementById("addNote")
 
 window.addEventListener("DOMContentLoaded", function()
 {
-   noteHeader.focus()
-   if(noteHeader.value == false)
-   {
-      noteHeader.value = "Untitled"
-   }
-   else
-   {
-      noteBody.focus()
-   }
+   noteHeader.style.display = "none"
+   noteBody.style.display = "none"
 })
 
 noteHeader.addEventListener("keydown", function(event)
@@ -24,3 +18,24 @@ noteHeader.addEventListener("keydown", function(event)
 })
 
 
+addNote.addEventListener("click", createNote)
+
+function createNote()
+{
+   noteHeader.style.display = "block"
+   noteBody.style.display = "block"
+   noteHeader.focus()
+   noteHeader.value = "Untitled"
+
+/*   noteHeader.focus()
+   if(noteHeader.value == false)
+   {
+      noteHeader.value = "Untitled"
+   }
+   else
+   {
+      noteBody.focus()
+   } 
+*/
+
+}
