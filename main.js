@@ -26,6 +26,7 @@ function createNote()
    noteBody.style.display = "block"
    noteHeader.focus()
    noteHeader.value = "Untitled"
+   noteBody.value = ""
 
 /*   noteHeader.focus()
    if(noteHeader.value == false)
