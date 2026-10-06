@@ -50,10 +50,17 @@ function renderNoteInFileManager()
    noteFileBody.classList.add(`noteFile`)
    
    let noteTitle = document.createElement(`span`)
-   noteTitle = noteHeader.value;
-   
+   noteTitle.textContent = noteHeader.value;
+
    noteFileBody.append(noteTitle)
    filesLayout.append(noteFileBody)
 
+   noteHeader.addEventListener(`input`, function(event) // realtimeUpdate(event), might create it as separate function to use for autosaving as well
+   {
+      noteTitle.textContent = event.target.value;
+      console.log("Just set title to: ", event.target.value);
+   })
 
 }
+
+
