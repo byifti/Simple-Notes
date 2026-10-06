@@ -46,7 +46,7 @@ function createNote()
    
    let newNote = new Note(timestamp, noteTitle, noteContent)
 
-   realtimeUpdate(noteHeader, newNote)
+   realtimeUpdate(noteHeader, noteBody, newNote)
 
    console.log(newNote)
    console.log(allNotes)
@@ -55,15 +55,21 @@ function createNote()
 
 }
 
-function realtimeUpdate(sourceOfInput, sourceOfOutput)
+function realtimeUpdate(sourceOfInput, sourceOfInput2, sourceOfOutput)
 {
-   sourceOfInput.addEventListener(`input`, updateTextContent)
-
-   function updateTextContent(event)
+   sourceOfInput.addEventListener(`input`, updateTitle)
+   function updateTitle(event)
    {
       sourceOfOutput.noteTitle = event.target.value;
       console.log(sourceOfOutput)
    }
+
+   sourceOfInput2.addEventListener(`input`, updateContent)
+   function updateContent(event)
+   {
+      sourceOfOutput.noteContent = event.target.value;
+   }
+   
 }
 
 function renderNoteInFileManager()
