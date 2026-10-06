@@ -2,7 +2,17 @@ let noteHeader = document.getElementById("noteHeader")
 let noteBody = document.getElementById("noteBody")
 let addNote = document.getElementById("addNote")
 let filesLayout = document.getElementById("filesLayout")
+let allNotes = [];
 
+class Note
+{
+   constructor(timestamp, noteTitle, noteContent)
+   {
+      this.timestamp = timestamp,
+      this.noteTitle = noteTitle,
+      this.noteContent = noteContent
+   }
+}
 
 window.addEventListener("DOMContentLoaded", function()
 {
@@ -26,22 +36,34 @@ function createNote()
 {
    noteHeader.style.display = "block"
    noteBody.style.display = "block"
-   noteHeader.focus()
-   noteHeader.value = "Untitled"
-   noteBody.value = ""
+   noteHeader.focus() 
+   noteHeader.value = "Untitled" 
+   noteBody.value = "" // Default values and states
 
-/*   noteHeader.focus()
-   if(noteHeader.value == false)
+   let timestamp = Date.now()
+   let noteTitle; // Need this to be updated live
+   let noteContent; // Need this to be updated live
+   
+   let newNote = new Note(timestamp, noteTitle, noteContent)
+
+   realtimeUpdate(noteHeader, newNote)
+
+   console.log(newNote)
+   console.log(allNotes)
+
+   allNotes.push(newNote)
+
+}
+
+function realtimeUpdate(sourceOfInput, sourceOfOutput)
+{
+   sourceOfInput.addEventListener(`input`, updateTextContent)
+
+   function updateTextContent(event)
    {
-      noteHeader.value = "Untitled"
+      sourceOfOutput.noteTitle = event.target.value;
+      console.log(sourceOfOutput)
    }
-   else
-   {
-      noteBody.focus()
-   } 
-*/
-   renderNoteInFileManager()
-
 }
 
 function renderNoteInFileManager()
@@ -55,12 +77,14 @@ function renderNoteInFileManager()
    noteFileBody.append(noteTitle)
    filesLayout.append(noteFileBody)
 
-   noteHeader.addEventListener(`input`, function(event) // realtimeUpdate(event), might create it as separate function to use for autosaving as well
-   {
-      noteTitle.textContent = event.target.value;
-      console.log("Just set title to: ", event.target.value);
-   })
-
 }
 
 
+/*
+
+Note object -> Main source of truth
+|- timestamp = Unique identifier, gives each note own identity
+|- noteTitle = Header, file title
+|- noteContent = The note body, written things inside the note
+
+*/
