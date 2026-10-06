@@ -14,12 +14,13 @@
 {
    margin: 0;
    box-sizing: border-box;
-   font-family: Lato;
+   font-family: Helvetica;
+
 }
 
 body
 {
-   font-family: Lato;
+   font-family: Helvetica;
    font-weight: 300;
    background-color: var(--backgroundColor);
    color: var(--fontColor);
@@ -44,6 +45,7 @@ body
    display: grid;
    grid-template-rows: 0.1fr 1fr;
    gap: 1rem;
+   padding: 0.5rem;
 
 }
 
@@ -51,21 +53,38 @@ body
 #noteManagementButtons
 {
    background-color: blue;
+   border-radius: 0.5rem;
+   
 }
 
 #filesLayout
 {
    background-color: orange;
-   padding: 1.5rem 0rem; /*Gives head space and bottom space to the files*/
+   padding: 1.5rem 0.25rem; /*Gives head space and bottom space to the files*/
+   border-radius: 0.5rem;
 }
 
 .noteFile
 {
    margin-top: 0.5rem;
    background-color: #84914f;
+   padding: 0rem 0.5rem;
    height: 2rem;
    width: 100%;
    border-radius: 0.5rem;
+   display: flex;
+   align-items: center;
+   transition: 0.15s ease-in-out;
+}
+
+.noteFile:hover
+{
+   background-color: #93a644;
+}
+
+.noteFile:active
+{
+   background-color: #728331;
 }
 
 #noteEditorContainer
@@ -104,6 +123,6 @@ body
 #noteHeader
 {
    text-align: center;
-   font-weight: 600;
+   font-weight: 550;
    font-size: 2rem;
 }

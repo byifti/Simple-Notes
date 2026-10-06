@@ -1,6 +1,8 @@
 let noteHeader = document.getElementById("noteHeader")
 let noteBody = document.getElementById("noteBody")
 let addNote = document.getElementById("addNote")
+let filesLayout = document.getElementById("filesLayout")
+
 
 window.addEventListener("DOMContentLoaded", function()
 {
@@ -38,5 +40,20 @@ function createNote()
       noteBody.focus()
    } 
 */
+   renderNoteInFileManager()
+
+}
+
+function renderNoteInFileManager()
+{
+   let noteFileBody = document.createElement(`div`)
+   noteFileBody.classList.add(`noteFile`)
+   
+   let noteTitle = document.createElement(`span`)
+   noteTitle = noteHeader.value;
+   
+   noteFileBody.append(noteTitle)
+   filesLayout.append(noteFileBody)
+
 
 }
