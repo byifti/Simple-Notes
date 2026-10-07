@@ -3,6 +3,7 @@ let noteBody = document.getElementById("noteBody")
 let addNote = document.getElementById("addNote")
 let filesLayout = document.getElementById("filesLayout")
 let allNotes = [];
+let activeNote;
 
 class Note
 {
@@ -53,6 +54,9 @@ function createNote()
 
    allNotes.push(newNote)
 
+   activeNote = timestamp;
+   console.log(activeNote)
+
 }
 
 function realtimeUpdate(sourceOfInput, sourceOfInput2, sourceOfOutput)
@@ -69,7 +73,7 @@ function realtimeUpdate(sourceOfInput, sourceOfInput2, sourceOfOutput)
    {
       sourceOfOutput.noteContent = event.target.value;
    }
-   
+
 }
 
 function renderNoteInFileManager()
@@ -86,7 +90,11 @@ function renderNoteInFileManager()
 }
 
 
-/*
+/* 
+
+CURRENT BUGS:
+- Updating updates all of the notes. I just want it to update specific or latest one. It needs to know 
+inside which note / state its in
 
 Note object -> Main source of truth
 |- timestamp = Unique identifier, gives each note own identity
