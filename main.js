@@ -3,6 +3,7 @@ let noteBody = document.getElementById("noteBody")
 let addNote = document.getElementById("addNote")
 let filesLayout = document.getElementById("filesLayout")
 let allNotes = [];
+let activeNoteID;
 let activeNote;
 
 class Note
@@ -46,33 +47,46 @@ function createNote()
    let noteContent; // Need this to be updated live
    
    let newNote = new Note(timestamp, noteTitle, noteContent)
-
-   realtimeUpdate(noteHeader, noteBody, newNote)
-
-   console.log(newNote)
-   console.log(allNotes)
-
    allNotes.push(newNote)
+   activeNoteID = timestamp;
 
-   activeNote = timestamp;
-   console.log(activeNote)
+   realtimeUpdate(noteHeader, noteBody)
+
+   console.log("This is the new created note:", newNote)
+//   console.log(allNotes)
+//   console.log(activeNoteID)
 
 }
 
-function realtimeUpdate(sourceOfInput, sourceOfInput2, sourceOfOutput)
+function realtimeUpdate(sourceOfInput, sourceOfInput2)
 {
+
+   activeNote = allNotes.find(function(noteObject)
+   {
+      return noteObject.timestamp === activeNoteID
+   }); // This returns the latest Note object
+
+   console.log("This is the active note:", activeNote)
+
    sourceOfInput.addEventListener(`input`, updateTitle)
    function updateTitle(event)
    {
-      sourceOfOutput.noteTitle = event.target.value;
-      console.log(sourceOfOutput)
+      activeNote.noteTitle = event.target.value;
+      //console.log(activeNote.noteTitle)
+      // console.log(allNotes)
    }
 
    sourceOfInput2.addEventListener(`input`, updateContent)
    function updateContent(event)
    {
-      sourceOfOutput.noteContent = event.target.value;
-   }
+      activeNote.noteContent = event.target.value;
+   } // Here I am updating the latest note object only BUT for some reason older ones get updated too
+   // Speculation: Older one er khetre or ID tai latest chilo so thats active but when new one gets created, that one becomes latest and that one
+   // becomes active, so in that sense, all of them are "activeNote" locally so it changes for all of them
+   // This makes sense too because the older object notes' title gets updated when I press something inside the noteHeader which means when the
+   // eventListener gets triggered, it gets triggered for both older note (because in its context, its the activeNote) and the actual activeNote
+   // So both get updated instead of the real activeNote. Fucking hell, I was genuinely getting titled over ts
+   // Fix: Just moved the activeNote object globally instead of locally and reassinged value on update. Idek why I made it local, that was dumb
 
 }
 
