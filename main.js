@@ -43,8 +43,8 @@ function createNote()
    noteBody.value = "" // Default values and states
 
    let timestamp = Date.now()
-   let noteTitle; // Need this to be updated live
-   let noteContent; // Need this to be updated live
+   let noteTitle; 
+   let noteContent; 
    
    let newNote = new Note(timestamp, noteTitle, noteContent)
    allNotes.push(newNote)
@@ -53,6 +53,7 @@ function createNote()
    realtimeUpdate(noteHeader, noteBody)
 
    console.log("This is the new created note:", newNote)
+   saveData(allNotes)
 //   console.log(allNotes)
 //   console.log(activeNoteID)
 
@@ -72,6 +73,7 @@ function realtimeUpdate(sourceOfInput, sourceOfInput2)
    function updateTitle(event)
    {
       activeNote.noteTitle = event.target.value;
+      saveData(allNotes)
       //console.log(activeNote.noteTitle)
       // console.log(allNotes)
    }
@@ -80,14 +82,9 @@ function realtimeUpdate(sourceOfInput, sourceOfInput2)
    function updateContent(event)
    {
       activeNote.noteContent = event.target.value;
-   } // Here I am updating the latest note object only BUT for some reason older ones get updated too
-   // Speculation: Older one er khetre or ID tai latest chilo so thats active but when new one gets created, that one becomes latest and that one
-   // becomes active, so in that sense, all of them are "activeNote" locally so it changes for all of them
-   // This makes sense too because the older object notes' title gets updated when I press something inside the noteHeader which means when the
-   // eventListener gets triggered, it gets triggered for both older note (because in its context, its the activeNote) and the actual activeNote
-   // So both get updated instead of the real activeNote. Fucking hell, I was genuinely getting titled over ts
-   // Fix: Just moved the activeNote object globally instead of locally and reassinged value on update. Idek why I made it local, that was dumb
-
+      saveData(allNotes)
+   }
+   
 }
 
 function renderNoteInFileManager()
@@ -104,15 +101,8 @@ function renderNoteInFileManager()
 }
 
 
-/* 
-
-CURRENT BUGS:
-- Updating updates all of the notes. I just want it to update specific or latest one. It needs to know 
-inside which note / state its in
-
-Note object -> Main source of truth
-|- timestamp = Unique identifier, gives each note own identity
-|- noteTitle = Header, file title
-|- noteContent = The note body, written things inside the note
-
-*/
+function saveData(arrayOfNotesObject)
+{
+   let dataString = JSON.stringify(arrayOfNotesObject)
+   localStorage.setItem(`Notes`, `${dataString}`)
+}
