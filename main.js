@@ -21,6 +21,12 @@ window.addEventListener("DOMContentLoaded", function()
    noteHeader.style.display = "none"
    noteBody.style.display = "none"
    loadData();
+
+   for(let note of allNotes)
+   {
+      renderNoteInFileManager(note)
+   }
+
 })
 
 noteHeader.addEventListener("keydown", function(event)
@@ -88,13 +94,13 @@ function realtimeUpdate(sourceOfInput, sourceOfInput2)
    
 }
 
-function renderNoteInFileManager()
+function renderNoteInFileManager(noteObject)
 {
    let noteFileBody = document.createElement(`div`)
    noteFileBody.classList.add(`noteFile`)
    
    let noteTitle = document.createElement(`span`)
-   noteTitle.textContent = noteHeader.value;
+   noteTitle.textContent = noteObject.noteTitle;
 
    noteFileBody.append(noteTitle)
    filesLayout.append(noteFileBody)
