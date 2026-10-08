@@ -20,6 +20,7 @@ window.addEventListener("DOMContentLoaded", function()
 {
    noteHeader.style.display = "none"
    noteBody.style.display = "none"
+   loadData();
 })
 
 noteHeader.addEventListener("keydown", function(event)
@@ -105,4 +106,19 @@ function saveData(arrayOfNotesObject)
 {
    let dataString = JSON.stringify(arrayOfNotesObject)
    localStorage.setItem(`Notes`, `${dataString}`)
+}
+
+function loadData()
+{
+   let dataString = localStorage.getItem(`Notes`) 
+
+   if(dataString === null) // Without this, if localStorage is empty, the dataString returns NULL which makes the array NULL then u cant add stuff to array which breaks the code cuz u need empty array not NULL (which is not an array) 
+   {
+      return
+   }
+   else
+   {
+      allNotes = JSON.parse(dataString)
+   }
+
 }
