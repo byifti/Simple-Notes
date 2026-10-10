@@ -25,6 +25,7 @@ window.addEventListener("DOMContentLoaded", function()
    for(let note of allNotes)
    {
       renderNoteInFileManager(note)
+      realtimeUpdate(noteHeader, noteBody)
    }
 
 })
@@ -38,6 +39,13 @@ noteHeader.addEventListener("keydown", function(event)
    }
 })
 
+/* noteHeader.addEventListener(`focusout`, function(event)
+{
+   if(noteHeader !== activeNote.title)
+   {
+      renderNoteInFileManager()
+   }
+}) */
 
 addNote.addEventListener("click", createNote)
 
@@ -59,7 +67,7 @@ function createNote()
 
    realtimeUpdate(noteHeader, noteBody)
 
-   console.log("This is the new created note:", newNote)
+//   console.log("This is the new created note:", newNote)
    saveData(allNotes)
 //   console.log(allNotes)
 //   console.log(activeNoteID)
@@ -81,7 +89,7 @@ function realtimeUpdate(sourceOfInput, sourceOfInput2)
    {
       activeNote.noteTitle = event.target.value;
       saveData(allNotes)
-      //console.log(activeNote.noteTitle)
+      console.log(activeNote.noteTitle)
       // console.log(allNotes)
    }
 
@@ -104,6 +112,18 @@ function renderNoteInFileManager(noteObject)
 
    noteFileBody.append(noteTitle)
    filesLayout.append(noteFileBody)
+
+   noteFileBody.addEventListener(`contextmenu`, function(event)
+   {
+      event.preventDefault()
+   })
+
+   noteFileBody.addEventListener(`click`, function()
+   {
+      activeNote = noteObject // Updates active note when clicked. Made typo of doing noteObject.timestamp before
+      console.log("This changed active note to:", activeNote)
+      renderNote()
+   })
 
 }
 
@@ -128,3 +148,18 @@ function loadData()
    }
 
 }
+
+function renderNote()
+{
+   noteHeader.style.display = "block"
+   noteBody.style.display = "block"
+   noteHeader.focus() 
+
+   noteHeader.value = activeNote.noteTitle
+   noteBody.value = activeNote.noteContent
+//   console.log(activeNote)
+}
+
+// use this addEventListener(`focusout`, ) to make it so when the noteHeader
+// gets out of focus, it will update the name in file Manager (Wouldve liked live update though)
+// idt thats working
