@@ -19,7 +19,7 @@ class Note
 window.addEventListener("DOMContentLoaded", function()
 {
    noteHeader.style.display = "none"
-   noteBody.style.display = "none"
+   noteBody.style.display = "none" // Default states
    loadData();
 
    for(let note of allNotes)
@@ -38,14 +38,6 @@ noteHeader.addEventListener("keydown", function(event)
       noteBody.focus()
    }
 })
-
-/* noteHeader.addEventListener(`focusout`, function(event)
-{
-   if(noteHeader !== activeNote.title)
-   {
-      renderNoteInFileManager()
-   }
-}) */
 
 addNote.addEventListener("click", createNote)
 
@@ -74,26 +66,26 @@ function createNote()
 
 }
 
-function realtimeUpdate(sourceOfInput, sourceOfInput2)
+function realtimeUpdate(sourceOfTitle, sourceOfContent)
 {
 
    activeNote = allNotes.find(function(noteObject)
    {
-      return noteObject.timestamp === activeNoteID
+      return noteObject.timestamp === activeNoteID // IMPROVEMENT TO MAKE: CHANGE NAME FROM TIMESTAMP → noteID
    }); // This returns the latest Note object
 
-   console.log("This is the active note:", activeNote)
+   // console.log("This is the active note:", activeNote)
 
-   sourceOfInput.addEventListener(`input`, updateTitle)
+   sourceOfTitle.addEventListener(`input`, updateTitle)
    function updateTitle(event)
    {
       activeNote.noteTitle = event.target.value;
       saveData(allNotes)
-      console.log(activeNote.noteTitle)
+      // console.log(activeNote.noteTitle)
       // console.log(allNotes)
    }
 
-   sourceOfInput2.addEventListener(`input`, updateContent)
+   sourceOfContent.addEventListener(`input`, updateContent)
    function updateContent(event)
    {
       activeNote.noteContent = event.target.value;
@@ -125,8 +117,23 @@ function renderNoteInFileManager(noteObject)
       renderNote()
    })
 
+   noteHeader.addEventListener(`input`, updateNoteTitleInFileManager)
+
+   function updateNoteTitleInFileManager()
+   {
+      noteTitle.textContent = noteObject.noteTitle;
+   }
 }
 
+function renderNote()
+{
+   noteHeader.style.display = "block"
+   noteBody.style.display = "block"
+   noteHeader.focus() 
+
+   noteHeader.value = activeNote.noteTitle
+   noteBody.value = activeNote.noteContent 
+}
 
 function saveData(arrayOfNotesObject)
 {
@@ -149,17 +156,4 @@ function loadData()
 
 }
 
-function renderNote()
-{
-   noteHeader.style.display = "block"
-   noteBody.style.display = "block"
-   noteHeader.focus() 
-
-   noteHeader.value = activeNote.noteTitle
-   noteBody.value = activeNote.noteContent
-//   console.log(activeNote)
-}
-
-// use this addEventListener(`focusout`, ) to make it so when the noteHeader
-// gets out of focus, it will update the name in file Manager (Wouldve liked live update though)
-// idt thats working
+// rn the issue is that the renderer in file manager isnt synced up with the data model
