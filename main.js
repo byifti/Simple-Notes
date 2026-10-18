@@ -2,6 +2,8 @@ let noteHeader = document.getElementById("noteHeader")
 let noteBody = document.getElementById("noteBody")
 let addNote = document.getElementById("addNote")
 let filesLayout = document.getElementById("filesLayout")
+let contextMenu = document.getElementById("contextMenu")
+let deleteBtn = document.getElementById("deleteBtn")
 let allNotes = [];
 let activeNoteID;
 let activeNote;
@@ -108,6 +110,11 @@ function renderNoteInFileManager(noteObject)
    noteFileBody.addEventListener(`contextmenu`, function(event)
    {
       event.preventDefault()
+
+      contextMenu.style.top = `${event.clientY}px`
+      contextMenu.style.left = `${event.clientX}px` // Event Object theke mouse er X position nitasi
+
+      contextMenu.showPopover()
    })
 
    noteFileBody.addEventListener(`click`, function()
@@ -156,4 +163,3 @@ function loadData()
 
 }
 
-// rn the issue is that the renderer in file manager isnt synced up with the data model

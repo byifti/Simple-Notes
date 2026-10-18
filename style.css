@@ -126,3 +126,19 @@ body
    font-weight: 550;
    font-size: 2rem;
 }
+
+#contextMenu
+{
+   background-color: red;
+   position: fixed;
+   border-radius: 0.5rem;
+   width: 10rem;
+   height: 2.5rem;
+   padding: 0.5rem;
+   border: none;
+}
+
+#deleteBtn
+{
+   
+}
