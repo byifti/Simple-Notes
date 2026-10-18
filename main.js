@@ -6,7 +6,8 @@ let contextMenu = document.getElementById("contextMenu")
 let deleteBtn = document.getElementById("deleteBtn")
 let allNotes = [];
 let activeNoteID;
-let activeNote;
+let activeNote; // Tracking active note state
+let contextMenuOpenNote;
 
 class Note
 {
@@ -74,7 +75,7 @@ function realtimeUpdate(sourceOfTitle, sourceOfContent)
    activeNote = allNotes.find(function(noteObject)
    {
       return noteObject.timestamp === activeNoteID // IMPROVEMENT TO MAKE: CHANGE NAME FROM TIMESTAMP → noteID
-   }); // This returns the latest Note object
+   }); // This returns the latest/active Note object
 
    // console.log("This is the active note:", activeNote)
 
@@ -110,11 +111,13 @@ function renderNoteInFileManager(noteObject)
    noteFileBody.addEventListener(`contextmenu`, function(event)
    {
       event.preventDefault()
+      contextMenuOpenNote = noteObject
 
       contextMenu.style.top = `${event.clientY}px`
       contextMenu.style.left = `${event.clientX}px` // Event Object theke mouse er X position nitasi
 
       contextMenu.showPopover()
+      console.log(contextMenuOpenNote)
    })
 
    noteFileBody.addEventListener(`click`, function()
@@ -163,3 +166,13 @@ function loadData()
 
 }
 
+deleteBtn.addEventListener(`click`, deleteNote)
+
+function deleteNote()
+{
+   let indexOfNoteToDelete = allNotes.indexOf(contextMenuOpenNote)
+   console.log(contextMenuOpenNote, `will be deleted. Index: ${indexOfNoteToDelete}`)
+   allNotes.splice(indexOfNoteToDelete, 1);
+   saveData(allNotes)
+   
+}
