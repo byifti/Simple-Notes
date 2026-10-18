@@ -60,7 +60,7 @@ function createNote()
    activeNoteID = timestamp;
 
    realtimeUpdate(noteHeader, noteBody)
-
+   renderNoteInFileManager(activeNote)
 //   console.log("This is the new created note:", newNote)
    saveData(allNotes)
 //   console.log(allNotes)
