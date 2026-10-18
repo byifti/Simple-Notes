@@ -68,13 +68,17 @@ body
 {
    margin-top: 0.5rem;
    background-color: #84914f;
-   padding: 0rem 0.5rem;
+   padding: 0.5rem;
    height: 2rem;
    width: 100%;
+   max-width: 207px;
    border-radius: 0.5rem;
-   display: flex;
+   display: block;
    align-items: center;
    transition: 0.15s ease-in-out;
+   white-space: nowrap;
+   overflow: hidden;
+   text-overflow: ellipsis;
 }
 
 .noteFile:hover
