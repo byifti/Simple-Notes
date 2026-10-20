@@ -5,7 +5,7 @@ let filesLayout = document.getElementById("filesLayout")
 let contextMenu = document.getElementById("contextMenu")
 let deleteBtn = document.getElementById("deleteBtn")
 let allNotes = [];
-let activeNoteID;
+// let activeNoteID;
 let activeNote; // Tracking active note state
 let contextMenuOpenNote;
 
@@ -28,8 +28,9 @@ window.addEventListener("DOMContentLoaded", function()
    for(let note of allNotes)
    {
       renderNoteInFileManager(note)
-      realtimeUpdate(noteHeader, noteBody)
    }
+
+   console.log(activeNote)
 
 })
 
@@ -49,7 +50,7 @@ function createNote()
    noteHeader.style.display = "block"
    noteBody.style.display = "block"
    noteHeader.focus() 
-   noteHeader.value = "Untitled" 
+   noteHeader.value = "Untitled" // FIXED: This starts off as Undefined in Data side of things cuz user didnt input, somehow read this
    noteBody.value = "" // Default values and states
 
    let timestamp = Date.now()
@@ -57,25 +58,30 @@ function createNote()
    let noteContent; 
    
    let newNote = new Note(timestamp, noteTitle, noteContent)
+   newNote.noteTitle = noteHeader.value;
+   newNote.noteContent = noteBody.value;
    allNotes.push(newNote)
-   activeNoteID = timestamp;
+   activeNote = newNote;
+//   activeNoteID = timestamp;
 
-   realtimeUpdate(noteHeader, noteBody)
    renderNoteInFileManager(activeNote)
+   // realtimeUpdate(noteHeader, noteBody) // IDK why I had this
 //   console.log("This is the new created note:", newNote)
    saveData(allNotes)
 //   console.log(allNotes)
-//   console.log(activeNoteID)
+   console.log(activeNote)
 
 }
+
+realtimeUpdate(noteHeader, noteBody) // Had this in the DOMContentLoaded For loop before, i dont need it there I think so moving it out
 
 function realtimeUpdate(sourceOfTitle, sourceOfContent)
 {
 
-   activeNote = allNotes.find(function(noteObject)
-   {
-      return noteObject.timestamp === activeNoteID // IMPROVEMENT TO MAKE: CHANGE NAME FROM TIMESTAMP → noteID
-   }); // This returns the latest/active Note object
+   // activeNote = allNotes.find(function(noteObject)
+   // {
+   //    return noteObject.timestamp === activeNoteID // IMPROVEMENT TO MAKE: CHANGE NAME FROM TIMESTAMP → noteID
+   // }); // This returns the latest/active Note object // I DONT NEED THESE ANYMORE I THINK? IDK WHY I HAD THIS
 
    // console.log("This is the active note:", activeNote)
 
@@ -174,5 +180,10 @@ function deleteNote()
    console.log(contextMenuOpenNote, `will be deleted. Index: ${indexOfNoteToDelete}`)
    allNotes.splice(indexOfNoteToDelete, 1);
    saveData(allNotes)
+
+   for(let note of allNotes)
+   {
+      renderNoteInFileManager(note)
+   }
    
 }
